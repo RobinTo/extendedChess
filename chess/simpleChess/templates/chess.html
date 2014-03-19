@@ -11,17 +11,20 @@
 </head>
 <body>
 
+<div class="content">
+
 <form method="post">{% csrf_token %}
 {{ f.as_p }}
 <input class="button" type="submit" value="Send Trekk" />
 </form>
 
-<div id="board" style="width: 700px"></div>
+<div id="board" style="height: 70%; width: auto;"></div>
 
 <Button class="button" onClick="resetGame()" >Nytt Spill</button>
 <Button class="button" onClick="restoreInitialFen()">Tilbakestill</button>
 <Button class="button" onClick="rotateBoard()">Snu Brettet</button>
 
+</div>
 
 <script src="{% static "js/json3.min.js" %}"></script>
 <script src="{% static "js/jquery-1.10.1.min.js" %}"></script>
