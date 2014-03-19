@@ -22,7 +22,7 @@
 
 <script src="{% static "js/json3.min.js" %}"></script>
 <script src="{% static "js/jquery-1.10.1.min.js" %}"></script>
-
+<script src="{% static "js/chess.min.js" %}"></script>
 <script>
 /*!
  * chessboard.js $version$
@@ -1733,6 +1733,7 @@ window.ChessBoard.objToFen = objToFen;
 <script>
 
 var board;
+var initialFen;
 
 var init = function() {
 
@@ -1751,21 +1752,29 @@ $("#id_fen").val("{{ gameData.fen }}");
 var updateFen = function()
 {
   $("#id_fen").val(board.fen());
-  getGameFen();
 };
 
-var getGameFen = function() {
+setInterval(function() {
   $.ajax({
     url: 'http://python.torsjakk.com/getGameFen/',
     type: 'get',
     success: function(data) {
-        alert(data);
+        if(data === initialFen)
+        {
+            var doNothing = 0;
+        }
+        else
+        {
+            initialFen = data
+            board.position(data)
+            updateFen()
+        }
     },
     failure: function(data) {
-        alert('Got an error dude');
+        alert('Got an error.');
     }
 });
-};
+}, 5000)
 
 var resetGame = function()
 {
