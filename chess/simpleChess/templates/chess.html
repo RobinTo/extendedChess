@@ -23,7 +23,12 @@
 
     </div>
     <div class="col-md-4">
-
+      <div class="row">
+        <span id="status"></span>
+      </div>
+      <div class="row">
+        <span id="pgn"></span>
+      </div>
       <div class="row">
           <br/>
         <form method="post">{% csrf_token %}
@@ -62,10 +67,66 @@
 
 <script>
 var board;
+var initialStatus = "Playing";
 var initialFen = "{{ gameData.fen }}";
+var initialPgn = "{{ gameData.pgn }}"
+var pgnE1 = $("#pgn");
+var statusE1 = $("#status");
 var game = new Chess();
 
+var onDragStart = function(source, piece, position, orientation)
+{
+  if (game.game_over() == true ||
+    (game.turn() === "w" && piece.search(/^b/) !== -1) ||
+    (game.turn() === "b" && piece.search(/^w/) !== -1))
+  {
+    return false;
+  }
+}
+
+var onDrop = function(source, target)
+{
+  var move = game.move({
+    from: source,
+    to: target,
+    promotion: 'q'
+  });
+  if(move === null) return 'snapback';
+
+  updateStatus();
+}
+
+var updateStatus = function() 
+{
+  var status = ''
+
+  var moveColor = "Hvit";
+  if(game.turn() === 'b'){
+    moveColor= "Svart";
+  }
+
+  if (game.in_checkmate() === true){
+    status = moveColor + " er sjakk matt!"
+  }
+  else if (game.in_draw() === true)
+  {
+    status = "Uavgjort!"
+  }
+  else
+  {
+    status = moveColor + " sin tur";
+    if(game.in_check() === true){
+      status += ", sjakk!";
+    }
+  }
+
+  statusE1.html(status);
+  fen.val(game.fen());
+  pgnE1.html(game.pgn());
+};
+
 var onSnapEnd = function(){
+  board.position(game.fen());
   updateFen();
 };
 
@@ -78,7 +139,8 @@ var cfg = {
   pieceTheme: '{% static "img/chesspieces/wikipedia/" %}{piece}.png',
 	position : "{{ gameData.fen }}",
   onSnapEnd: onSnapEnd,
-  sparePieces: true,
+  onDrop: onDrop,
+  onDragStart:onDragStart
 }
 board = new ChessBoard('board', cfg);
 
