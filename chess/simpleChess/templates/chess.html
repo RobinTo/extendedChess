@@ -22,9 +22,9 @@
       <div id="board" style="width: 500px"></div>
 
     </div>
-    <div class="col-md-4">
+    <div class="col-md-2">
       <div class="row">
-        <h2><span id="status"></span></h2>
+        <h3><span id="status"></span></h3>
       </div>
       <div class="row">
           <br/>
@@ -49,11 +49,25 @@
         <Button class="btn btn-primary" onClick="rotateBoard()">Snu Brettet</button>
         <br />
       </div>
+    </div>
+    <div class="col-md-2">
       <div class="row">
+        <br />
+        <br />
         <span id="pgn"></span>
       </div>
     </div>
 
+  </div>
+
+  <div class="row">
+    <p>Funksjoner:</p>
+    <ul>
+      <li>Send Trekk - Sender trekket ditt til motstanderen.</li>
+      <li>Nytt Spill - Trykk denne etterfulgt av Send Trekk for å starte nytt spill.</li>
+      <li>Tilbakestill - Angre siste trekk, kan bare trykkes dersom man ikke enda har sendt trekket.</li>
+      <li>Snu brettet - Snur brettet.</li>
+    </ul>
   </div>
 
 </div>
@@ -74,12 +88,14 @@ var pgnE1 = $("#pgn");
 var statusE1 = $("#status");
 var fen = $("#id_fen")
 var game = new Chess();
+var moves = 0;
 
 var onDragStart = function(source, piece, position, orientation)
 {
   if (game.game_over() == true ||
     (game.turn() === "w" && piece.search(/^b/) !== -1) ||
-    (game.turn() === "b" && piece.search(/^w/) !== -1))
+    (game.turn() === "b" && piece.search(/^w/) !== -1) ||
+    moves > 0)
   {
     return false;
   }
@@ -94,6 +110,7 @@ var onDrop = function(source, target)
   });
   if(move === null) return 'snapback';
 
+  moves += 1;
   updateStatus();
 }
 
@@ -173,7 +190,17 @@ var updateFen = function()
 
 var restoreInitialFen = function()
 {
-  board.position(initialFen);
+  if("{{ gameData.pgn }}" !== "new")
+  {
+    game.load_pgn("{{ gameData.pgn }}")
+  }
+  else
+  {
+    game = new Chess();
+    board.position(game.fen());
+    updateStatus();
+  }
+  moves = 0;
 };
 
 setInterval(function() {
