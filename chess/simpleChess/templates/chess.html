@@ -131,13 +131,14 @@ setInterval(function() {
 var submitFen = function()
 {
   $.ajax({
+    type: 'POST',
     url: 'http://python.torsjakk.com/',
-    type: 'post',
     data: {
-      "id_fen":$("#id_fen")
+      "id_fen":$("#id_fen").val
     },
     success: function(data) {
-        <!-- Do nothing! -->
+        initialFen = $("#id_fen").val;
+        board.position($("#id_fen").val);
     },
     failure: function(data) {
         alert('Problemer med å sende trekket, er du tilkoblet internett?');
