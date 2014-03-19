@@ -197,6 +197,8 @@ var restoreInitialFen = function()
   if("{{ gameData.pgn }}" !== "new")
   {
     game.load_pgn("{{ gameData.pgn }}")
+    board.position(game.fen());
+    updateStatus();
   }
   else
   {
@@ -221,6 +223,8 @@ setInterval(function() {
           if(data !== "new")
           {
             game.load_pgn(data)
+            board.position(game.fen());
+            updateStatus();
           }
           else
           {
