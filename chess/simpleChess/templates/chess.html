@@ -171,7 +171,7 @@ if("{{ gameData.pgn }}" !== "new")
 }
 board = new ChessBoard('board', cfg);
 
-$("#hideMe").hide();
+$("hideMe").hide();
 updateFen();
 
 updateStatus();
@@ -212,15 +212,23 @@ setInterval(function() {
     url: 'http://python.torsjakk.com/getGameFen/',
     type: 'get',
     success: function(data) {
-        if(data === initialFen)
+        if(data === initialPgn)
         {
             var doNothing = 0;
         }
         else
         {
-            initialFen = data
-            board.position(data)
-            updateFen()
+          if(data !== "new")
+          {
+            game.load_pgn(data)
+          }
+          else
+          {
+            game = new Chess();
+            board.position(game.fen());
+            updateStatus();
+          }
+          moves = 0;
         }
     },
     failure: function(data) {

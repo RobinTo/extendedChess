@@ -17,7 +17,7 @@ def chess(request):
 		else:
 			game = ChessGame()
 			game.fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"
-			game.pgn = ""
+			game.pgn = "new"
 			game.save()
 	f = ChessForm()
 	return render(request, 'chess.html', {'gameData' : game, 'f' : f})
@@ -26,7 +26,7 @@ def chess(request):
 def getGameFen(request):
 	if(len(ChessGame.objects.all()) > 0):
 	    game = ChessGame.objects.all()[0]
-	    fenString = game.fen
-	    return HttpResponse(fenString);
+	    pgnString = game.pgn
+	    return HttpResponse(pgnString);
 	else:
 		return HttpResponse("No game found.");
