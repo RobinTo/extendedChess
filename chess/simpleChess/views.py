@@ -24,6 +24,8 @@ def chess(request):
 
 def getGameFen(request):
 	if(len(ChessGame.objects.all()) > 0):
-		return ChessGame.objects.all()[0].fen
+	    game = ChessGame.objects.all()[0]
+	    fenString = game.fen
+		return HttpResponse(fenString);
 	else:
-		return "No game found."
+		return HttpResponse("No game found.");

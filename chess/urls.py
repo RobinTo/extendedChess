@@ -8,7 +8,7 @@ urlpatterns = patterns('',
     # url(r'^$', 'SimpleChess.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
-	url(r'^$', chess.simpleChess.views.chess, name='chess'),
-	url(r'getGameFen/^$', chess.simpleChess.views.getGameFen, name='getFen'),
+	url(r'^$', "chess.simpleChess.views.chess", name='chess'),
+	url(r'^getGameFen/', "chess.simpleChess.views.getGameFen", name='getFen'),
     url(r'^admin/', include(admin.site.urls)),
 )
