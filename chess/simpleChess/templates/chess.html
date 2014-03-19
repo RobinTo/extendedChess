@@ -143,11 +143,15 @@ var cfg = {
   onDrop: onDrop,
   onDragStart:onDragStart
 }
-game.load_pgn("{{ gameData.pgn }}")
+if("{{ gameData.pgn }}" !== "new")
+{
+  game.load_pgn("{{ gameData.pgn }}")
+}
 board = new ChessBoard('board', cfg);
 
 $("#id_fen").val(game.fen());
 
+updateStatus();
 readCookie();
 }; 
 // ---------
