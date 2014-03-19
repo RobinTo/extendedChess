@@ -13,42 +13,42 @@
 
 
 
+<div class="container">
 
+  <div class="row">
 
-<div class="row">
+    <div class ="col-md-8">
 
-  <div class ="col-md-8">
-
-    <div id="board" style="width: 500px"></div>
-
-  </div>
-  <div class="col-md-4">
-
-    <div class="row">
-    <form method="post">{% csrf_token %}
-    {{ f.as_p }}
-    <input class="button" type="submit" value="Send Trekk" />
-    </form>
-    </div>
-    <div class="row">
-    <Button class="button" onClick="resetGame()" >Nytt Spill</button>
+      <div id="board" style="width: 500px"></div>
 
     </div>
+    <div class="col-md-4">
 
-    <div class="row">
-    <Button class="button" onClick="restoreInitialFen()">Tilbakestill</button>
+      <div class="row">
+      <form method="post">{% csrf_token %}
+      {{ f.as_p }}
+      <input class="btn btn-primary" type="submit" value="Send Trekk" />
+      </form>
+      </div>
+      <div class="row">
+      <Button class="btn btn-primary" onClick="resetGame()" >Nytt Spill</button>
 
+      </div>
+
+      <div class="row">
+      <Button class="btn btn-primary" onClick="restoreInitialFen()">Tilbakestill</button>
+
+      </div>
+      <div class="row">
+
+      <Button class="btn btn-primary" onClick="rotateBoard()">Snu Brettet</button>
+
+      </div>
     </div>
-    <div class="row">
 
-    <Button class="button" onClick="rotateBoard()">Snu Brettet</button>
-
-    </div>
   </div>
 
 </div>
-
-
 
 
 <script src="{% static "js/json3.min.js" %}"></script>
