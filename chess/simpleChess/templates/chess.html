@@ -189,7 +189,14 @@ var rotateBoard = function()
 var updateFen = function()
 {
   $("#id_fen").val(game.fen());
-  $("#id_pgn").val(game.pgn());
+  if(game.pgn() == "")
+  {
+    $("#id_pgn").val("new");
+  }
+  else
+  {
+    $("#id_pgn").val(game.pgn());
+  }
 };
 
 var restoreInitialFen = function()
@@ -220,7 +227,7 @@ setInterval(function() {
         }
         else
         {
-          if(data != "new" || data != "")
+          if(data != "new" && data != "")
           {
             game.load_pgn(data)
           }
