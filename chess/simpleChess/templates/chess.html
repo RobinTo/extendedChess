@@ -27,11 +27,13 @@
         <h3><span id="status"></span></h3>
       </div>
       <div class="row">
-          <br/>
-        <form method="post">{% csrf_token %}
-        {{ f.as_p }}
-        <input class="btn btn-primary" type="submit" value="Send Trekk" />
-        </form>
+        <br/>
+        <div class="hideMe">
+          <form method="post">{% csrf_token %}
+          {{ f.as_p }}
+          <input class="btn btn-primary" type="submit" value="Send Trekk" />
+          </form>
+        </div>
       </div>
       <div class="row">
         <br />
@@ -53,6 +55,7 @@
     <div class="col-md-2">
       <div class="row">
         <br />
+        PGN:
         <br />
         <span id="pgn"></span>
       </div>
@@ -61,6 +64,8 @@
   </div>
 
   <div class="row">
+    <br />
+    <br />
     <p>Funksjoner:</p>
     <ul>
       <li>Send Trekk - Sender trekket ditt til motstanderen.</li>
@@ -166,8 +171,7 @@ if("{{ gameData.pgn }}" !== "new")
 }
 board = new ChessBoard('board', cfg);
 
-$("#id_fen").hide();
-$("#id_pgn").hide();
+$("#hideMe").hide();
 updateFen();
 
 updateStatus();
