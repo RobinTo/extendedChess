@@ -143,9 +143,10 @@ var cfg = {
   onDrop: onDrop,
   onDragStart:onDragStart
 }
+game.load_pgn("{{ gameData.pgn }}")
 board = new ChessBoard('board', cfg);
 
-$("#id_fen").val("{{ gameData.fen }}");
+$("#id_fen").val(game.fen());
 
 readCookie();
 }; 
@@ -160,7 +161,7 @@ var rotateBoard = function()
 
 var updateFen = function()
 {
-  $("#id_fen").val(board.fen());
+  $("#id_fen").val(game.fen());
 };
 
 var restoreInitialFen = function()

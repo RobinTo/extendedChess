@@ -17,6 +17,7 @@ def chess(request):
 		else:
 			game = ChessGame()
 			game.fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"
+			game.pgn = ""
 			game.save()
 	f = ChessForm()
 	return render(request, 'chess.html', {'gameData' : game, 'f' : f})
