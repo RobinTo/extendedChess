@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <title>Empty Board Example</title>
+  <title>Sjakk</title>
 
   <link rel="stylesheet" href="{% static "css/chessboard.css" %}" />
 </head>
@@ -12,13 +12,15 @@
 
 <form method="post">{% csrf_token %}
 {{ f.as_p }}
-<input class="button" type="submit" value="Submit Move" />
+<input class="button" type="submit" value="Send Trekk" />
 </form>
 
-<Button onClick="resetGame()" >Reset Game</button>
-
-
 <div id="board" style="width: 700px"></div>
+
+<Button onClick="resetGame()" >Nytt Spill</button>
+<Button onClick="restoreInitialFen()">Tilbakestill</button>
+<Button onClick="rotateBoard()">Snu Brettet</button>
+
 
 <script src="{% static "js/json3.min.js" %}"></script>
 <script src="{% static "js/jquery-1.10.1.min.js" %}"></script>
@@ -35,6 +37,8 @@ var onSnapEnd = function(){
   updateFen();
 };
 
+// Init
+// ----------
 var init = function() {
 
 var cfg = {
@@ -47,11 +51,23 @@ board = new ChessBoard('board', cfg);
 
 $("#id_fen").val("{{ gameData.fen }}");
 
-}; // end init()
+}; 
+// ---------
+// end init()
+
+var rotateBoard = function()
+{
+  board.flip();
+};
 
 var updateFen = function()
 {
   $("#id_fen").val(board.fen());
+};
+
+var restoreInitialFen = function()
+{
+  board.position(initialFen);
 };
 
 setInterval(function() {
