@@ -28,11 +28,8 @@
           <br/>
         <form method="post">{% csrf_token %}
         {{ f.as_p }}
+        <input class="btn btn-primary" type="submit" value="Send Trekk" />
         </form>
-      </div>
-      <div class="row">
-        <Button class="btn btn-primary" onClick="submitFen()" >Send Trekk</button>
-        <br />
       </div>
       <div class="row">
         <br />
@@ -87,6 +84,7 @@ board = new ChessBoard('board', cfg);
 
 $("#id_fen").val("{{ gameData.fen }}");
 
+readCookie();
 }; 
 // ---------
 // end init()
@@ -94,6 +92,7 @@ $("#id_fen").val("{{ gameData.fen }}");
 var rotateBoard = function()
 {
   board.flip();
+  writeCookie();
 };
 
 var updateFen = function()
@@ -128,28 +127,24 @@ setInterval(function() {
 });
 }, 5000)
 
-var submitFen = function()
-{
-  $.ajax({
-    type: 'POST',
-    url: 'http://python.torsjakk.com/',
-    data: {
-      "id_fen":$("#id_fen").val
-    },
-    success: function(data) {
-        initialFen = $("#id_fen").val;
-        board.position($("#id_fen").val);
-    },
-    failure: function(data) {
-        alert('Problemer med å sende trekket, er du tilkoblet internett?');
-    }
-  });
-}
-
 var resetGame = function()
 {
   board.position("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR")
   $("#id_fen").val(board.fen());
+};
+
+var writeCookie = function()
+{
+  document.cookie = board.orientation();
+};
+
+var readCookie = function()
+{
+  var color = getCookie("color");
+  if (color === "black")
+    board.orientation("white");
+  else
+    board.orientation("black");
 };
 
 $(document).ready(init);
