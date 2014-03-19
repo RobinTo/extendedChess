@@ -223,15 +223,14 @@ setInterval(function() {
           if(data != "new")
           {
             game.load_pgn(data)
-            board.position(game.fen());
-            updateStatus();
           }
           else
           {
             game = new Chess();
-            board.position(game.fen());
-            updateStatus();
           }
+          board.position(game.fen());
+          updateStatus();
+          updateFen();
           moves = 0;
         }
     },
@@ -243,8 +242,10 @@ setInterval(function() {
 
 var resetGame = function()
 {
-  board.position("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR")
-  $("#id_fen").val(board.fen());
+  game = new Chess();
+  board.position(game.fen());
+  updateStatus();
+  updateFen();
 };
 
 var writeCookie = function()
