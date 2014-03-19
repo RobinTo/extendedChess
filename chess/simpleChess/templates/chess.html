@@ -7,6 +7,7 @@
   <title>Sjakk</title>
 
   <link rel="stylesheet" href="{% static "css/chessboard.css" %}" />
+  <link rel="stylesheet" href="{% static "css/chessPage.css" %}" />
 </head>
 <body>
 
@@ -46,6 +47,7 @@ var cfg = {
   pieceTheme: '{% static "img/chesspieces/wikipedia/" %}{piece}.png',
 	position : "{{ gameData.fen }}",
   onSnapEnd: onSnapEnd,
+  sparePieces: true,
 }
 board = new ChessBoard('board', cfg);
 
