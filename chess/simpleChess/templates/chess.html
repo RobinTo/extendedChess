@@ -28,8 +28,11 @@
           <br/>
         <form method="post">{% csrf_token %}
         {{ f.as_p }}
-        <input class="btn btn-primary" type="submit" value="Send Trekk" />
-        </form><br />
+        </form>
+      </div>
+      <div class="row">
+        <Button class="btn btn-primary" onClick="submitFen()" >Send Trekk</button>
+        <br />
       </div>
       <div class="row">
         <br />
@@ -120,10 +123,27 @@ setInterval(function() {
         }
     },
     failure: function(data) {
-        alert('Got an error.');
+        alert('Problemer med å laste brettet, er du tilkoblet internett?');
     }
 });
 }, 5000)
+
+var postFen = function()
+{
+  $.ajax({
+    url: 'http://python.torsjakk.com/',
+    type: 'post',
+    data: {
+      "id_fen":$("#id_fen")
+    },
+    success: function(data) {
+        <!-- Do nothing! -->
+    },
+    failure: function(data) {
+        alert('Problemer med å sende trekket, er du tilkoblet internett?');
+    }
+  });
+}
 
 var resetGame = function()
 {
