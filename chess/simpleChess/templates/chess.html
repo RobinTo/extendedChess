@@ -14,7 +14,7 @@
 
 
 <div class="container">
-
+  <br />
   <div class="row">
 
     <div class ="col-md-8">
@@ -24,10 +24,7 @@
     </div>
     <div class="col-md-4">
       <div class="row">
-        <span id="status"></span>
-      </div>
-      <div class="row">
-        <span id="pgn"></span>
+        <h2><span id="status"></span></h2>
       </div>
       <div class="row">
           <br/>
@@ -51,6 +48,9 @@
         <br />
         <Button class="btn btn-primary" onClick="rotateBoard()">Snu Brettet</button>
         <br />
+      </div>
+      <div class="row">
+        <span id="pgn"></span>
       </div>
     </div>
 
@@ -123,7 +123,7 @@ var updateStatus = function()
 
   statusE1.html(status);
   fen.val(game.fen());
-  pgnE1.html(game.pgn());
+  pgnE1.html(game.pgn({ max_width: 5, newline_char: '<br />' }));
 };
 
 var onSnapEnd = function(){
@@ -149,6 +149,8 @@ if("{{ gameData.pgn }}" !== "new")
 }
 board = new ChessBoard('board', cfg);
 
+$("#id_fen").hide();
+$("#id_pgn").hide();
 updateFen();
 
 updateStatus();
