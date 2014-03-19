@@ -149,7 +149,7 @@ if("{{ gameData.pgn }}" !== "new")
 }
 board = new ChessBoard('board', cfg);
 
-$("#id_fen").val(game.fen());
+updateFen();
 
 updateStatus();
 readCookie();
@@ -166,6 +166,7 @@ var rotateBoard = function()
 var updateFen = function()
 {
   $("#id_fen").val(game.fen());
+  $("#id_pgn").val(game.pgn());
 };
 
 var restoreInitialFen = function()
