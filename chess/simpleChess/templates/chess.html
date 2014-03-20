@@ -201,9 +201,9 @@ var updateFen = function()
 
 var restoreInitialFen = function()
 {
-  if("{{ gameData.pgn }}" !== "new")
+  if(initialPgn !== "new")
   {
-    game.load_pgn("{{ gameData.pgn }}")
+    game.load_pgn(initialPgn)
     board.position(game.fen());
     updateStatus();
   }
