@@ -28,22 +28,20 @@
       </div>
       <div class="row">
         <br/>
-        <div class="hideMe">
-          <form method="post">{% csrf_token %}
-          {{ f.as_p }}
-          <input class="btn btn-primary" type="submit" value="Send Trekk" />
-          </form>
-        </div>
+        <form method="post">{% csrf_token %}
+        {{ f.as_p }}
+        <input class="btn btn-primary" type="submit" value="Send Trekk" />
+        </form>
+        <span id="sent"></span>
+      </div>
+      <div class="row">
+        <br />
+        <Button class="btn btn-primary" onClick="restoreInitialFen()">Angre</button>
+        <br />
       </div>
       <div class="row">
         <br />
         <Button class="btn btn-primary" onClick="resetGame()" >Nytt Spill</button>
-        <br />
-      </div>
-
-      <div class="row">
-        <br />
-        <Button class="btn btn-primary" onClick="restoreInitialFen()">Tilbakestill</button>
         <br />
       </div>
       <div class="row">
@@ -69,8 +67,8 @@
     <p>Funksjoner:</p>
     <ul>
       <li>Send Trekk - Sender trekket ditt til motstanderen.</li>
+      <li>Angre - Angre siste trekk, kan bare trykkes dersom man ikke enda har sendt trekket.</li>
       <li>Nytt Spill - Trykk denne etterfulgt av Send Trekk for å starte nytt spill.</li>
-      <li>Tilbakestill - Angre siste trekk, kan bare trykkes dersom man ikke enda har sendt trekket.</li>
       <li>Snu brettet - Snur brettet.</li>
     </ul>
   </div>
@@ -116,6 +114,8 @@ var onDrop = function(source, target)
   if(move === null) return 'snapback';
 
   moves += 1;
+
+  canSendMove();
   updateStatus();
 }
 
@@ -171,7 +171,9 @@ if("{{ gameData.pgn }}" !== "new")
 }
 board = new ChessBoard('board', cfg);
 
-$("hideMe").hide();
+$("#id_fen").hide();
+$("#id_pgn").hide();
+
 updateFen();
 
 updateStatus();
@@ -214,6 +216,7 @@ var restoreInitialFen = function()
     updateStatus();
   }
   moves = 0;
+  canSendMove();
 };
 
 setInterval(function() {
@@ -241,6 +244,7 @@ setInterval(function() {
           updateStatus();
           updateFen();
           moves = 0;
+          canSendMove();
         }
     },
     failure: function(data) {
@@ -282,6 +286,18 @@ for(var i=0; i<ca.length; i++)
   }
 return "";
 }
+
+var canSendMove = function()
+{
+  if(moves > 0)
+  {
+    $("#sent").html("Usendt trekk!")
+  }
+  else
+  {
+    $("#sent").html("");
+  }
+};
 
 $(document).ready(init);
 </script>
