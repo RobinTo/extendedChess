@@ -229,14 +229,14 @@ setInterval(function() {
         {
           if(data != "new" && data != "")
           {
-            alert(data);
             game.load_pgn(data)
           }
           else
           {
-            alert(data);
             game = new Chess();
           }
+          initialPgn = game.pgn();
+          initialFen = game.fen();
           board.position(game.fen());
           updateStatus();
           updateFen();
