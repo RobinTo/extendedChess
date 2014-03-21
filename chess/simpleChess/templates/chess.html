@@ -106,9 +106,11 @@ var game = new Chess();
 var moves = 0;
 
 
-var removeHighlights = function(color) {
+var removeHighlights = function() {
   $("#board").find('.square-55d63')
-    .removeClass('highlight-' + color);
+    .removeClass('highlight-white');
+  $("#board").find('.square-55d63')
+    .removeClass('highlight-black');
 };
 
 var setHighlights = function(source, target, color)
