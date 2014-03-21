@@ -222,6 +222,7 @@ setInterval(function() {
   $.ajax({
     url: 'http://python.torsjakk.com/getGameFen/',
     type: 'get',
+    cache: false,
     success: function(data) {
         if(data === initialPgn)
         {
