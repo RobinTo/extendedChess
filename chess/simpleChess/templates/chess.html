@@ -116,16 +116,18 @@ var setHighlights = function(source, target, color)
   removeHighlights()
 
   var history = game.history({ verbose:true })
-  var lastHistoryObject = history[history.length-1]
-  var color = 'white'
-  if(game.turn() === 'w')
+  if (history.length > 0)
   {
-    color = 'black'
+    var lastHistoryObject = history[history.length-1]
+    var color = 'white'
+    if(game.turn() === 'w')
+    {
+      color = 'black'
+    }
+
+    $("#board").find('.square-' + lastHistoryObject.from).addClass('highlight-'+color);
+    $("#board").find('.square-' + lastHistoryObject.to).addClass('highlight-'+color);
   }
-
-  $("#board").find('.square-' + lastHistoryObject.from).addClass('highlight-'+color);
-  $("#board").find('.square-' + lastHistoryObject.to).addClass('highlight-'+color);
-
 };
 
 var onDragStart = function(source, piece, position, orientation)
