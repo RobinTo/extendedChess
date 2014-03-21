@@ -115,7 +115,7 @@ var setHighlights = function(source, target, color)
 {
   removeHighlights()
 
-  var history = chess.history({ verbose:true })
+  var history = game.history({ verbose:true })
   var lastHistoryObject = history[history.length-1]
   var color = 'white'
   if(game.turn() === 'w')
