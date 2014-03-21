@@ -11,6 +11,18 @@
 </head>
 <body>
 
+<style type="text/css">
+.highlight-white {
+  -webkit-box-shadow: inset 0 0 3px 3px yellow;
+  -moz-box-shadow: inset 0 0 3px 3px yellow;
+  box-shadow: inset 0 0 3px 3px yellow;  
+}
+.highlight-black {
+  -webkit-box-shadow: inset 0 0 3px 3px blue;
+  -moz-box-shadow: inset 0 0 3px 3px blue;
+  box-shadow: inset 0 0 3px 3px blue;  
+}
+</style>
 
 
 <div class="container">
@@ -93,6 +105,29 @@ var fen = $("#id_fen")
 var game = new Chess();
 var moves = 0;
 
+
+var removeHighlights = function(color) {
+  boardEl.find('.square-55d63')
+    .removeClass('highlight-' + color);
+};
+
+var setHighlights = function(source, target, color)
+{
+  removeHighlights()
+
+  var history = chess.history({ verbose:true })
+  var lastHistoryObject = history[history.length-1]
+  var color = 'white'
+  if(game.turn() === 'w')
+  {
+    color = 'black'
+  }
+
+  $("#board").find('.square-' + lastHistoryObject.from).addClass('highlight-'+color);
+  $("#board").find('.square-' + lastHistoryObject.to).addClass('highlight-'+color);
+
+};
+
 var onDragStart = function(source, piece, position, orientation)
 {
   if (game.game_over() == true ||
@@ -106,6 +141,7 @@ var onDragStart = function(source, piece, position, orientation)
 
 var onDrop = function(source, target)
 {
+
   var move = game.move({
     from: source,
     to: target,
@@ -117,6 +153,7 @@ var onDrop = function(source, target)
 
   canSendMove();
   updateStatus();
+
 }
 
 var updateStatus = function() 
@@ -151,6 +188,7 @@ var updateStatus = function()
 var onSnapEnd = function(){
   board.position(game.fen());
   updateFen();
+  setHighlights();
 };
 
 // Init
