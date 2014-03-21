@@ -250,12 +250,14 @@ var restoreInitialFen = function()
     game.load_pgn(initialPgn)
     board.position(game.fen());
     updateStatus();
+    updateFen();
   }
   else
   {
     game = new Chess();
     board.position(game.fen());
     updateStatus();
+    updateFen();
   }
   moves = 0;
   canSendMove();
