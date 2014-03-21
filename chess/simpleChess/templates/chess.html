@@ -185,13 +185,11 @@ var updateStatus = function()
   statusE1.html(status);
   fen.val(game.fen());
   pgnE1.html(game.pgn({ max_width: 5, newline_char: '<br />' }));
-  setHighlights();
 };
 
 var onSnapEnd = function(){
   board.position(game.fen());
   updateFen();
-  setHighlights();
 };
 
 // Init
@@ -218,7 +216,7 @@ updateFen();
 
 updateStatus();
 readCookie();
-  setHighlights();
+setHighlights();
 }; 
 // ---------
 // end init()
@@ -240,6 +238,7 @@ var updateFen = function()
   {
     $("#id_pgn").val(game.pgn());
   }
+  setHighlights();
 };
 
 var restoreInitialFen = function()
